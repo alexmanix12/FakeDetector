@@ -1,0 +1,9 @@
+protobuf==4.21.0
+torch==1.10.2
+scikit_image
+scipy==1.5.4
+matplotlib==3.3.4
+numpy==1.19.5
+dlib
+Pillow==8.1.0
+opencv-python==4.5.1.48
