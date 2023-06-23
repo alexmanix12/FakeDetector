@@ -1,4 +1,6 @@
 import os
+# Some environment problem caused me issues. 
+# This allowed me to train this model, however, the solution is "not safe".
 os.environ["KMP_DUPLICATE_LIB_OK"]="TRUE"
 import torch
 from torch import nn
@@ -57,7 +59,7 @@ def train(folder_path, tf=False, accuracy=0.9):
     accuracy = np.mean([float(int(y >= accuracy) == tf) for y in y_pred])
     print(f"{"True Images" if not tf else "False Images"} Accuracy: {accuracy}")
 
-def test(folder_path, accuracy):
+def test(folder_path, tf, accuracy=0.9):
     res = [detector.testFolder(folder_path) for detector in detectors]
 
     X = [[result[det][1] for det in range(detector_num)] for result in res]
@@ -67,8 +69,4 @@ def test(folder_path, accuracy):
     
     accuracy = np.mean([float(int(y >= accuracy) == tf) for y in y_pred])
     print(f"Test Accuracy: {accuracy}")
-
-train("fakeimages", True)
-train("trueimages", False)
-test("testimages")
 
