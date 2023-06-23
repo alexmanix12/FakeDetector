@@ -58,15 +58,18 @@ def train(folder_path, tf=False, accuracy=0.9):
 
     accuracy = np.mean([float(int(y >= accuracy) == tf) for y in y_pred])
     print(f"{"True Images" if not tf else "False Images"} Accuracy: {accuracy}")
+    torch.save(model.state_dict(), "model.pth")
 
 def test(folder_path, tf, accuracy=0.9):
+    trained_model = MainDecider()
+    trained_model.load_state_dict(torch.load("model.pth"))
+
     res = [detector.testFolder(folder_path) for detector in detectors]
 
     X = [[result[det][1] for det in range(detector_num)] for result in res]
 
     with torch.no_grad():
-        y_pred = model(X)
+        y_pred = trained_model(X)
     
     accuracy = np.mean([float(int(y >= accuracy) == tf) for y in y_pred])
     print(f"Test Accuracy: {accuracy}")
-
