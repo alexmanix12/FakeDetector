@@ -57,7 +57,11 @@ def train(folder_path, tf=False, accuracy=0.9):
         y_pred = model(X)
 
     accuracy = np.mean([float(int(y >= accuracy) == tf) for y in y_pred])
-    print(f"{"True Images" if not tf else "False Images"} Accuracy: {accuracy}")
+    if not tf:
+        print(f"True Images Accuracy: {accuracy}")
+    else:
+        print(f"False Images Accuracy: {accuracy}")
+        
     torch.save(model.state_dict(), "model.pth")
 
 def test(folder_path, tf, accuracy=0.9):
